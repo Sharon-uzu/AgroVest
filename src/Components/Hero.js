@@ -5,7 +5,7 @@ const Hero = () => {
     <div className='hero'>
         <div className='h-c'>
             <h3>Cultivating Innovation, Empowering Farmers, and Sustaining Our Future"</h3>
-            <a href=""><button>Explore</button></a>
+            <a href="#about"><button>Explore</button></a>
         </div>
     </div>
   )

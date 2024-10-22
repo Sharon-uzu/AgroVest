@@ -1,8 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 
 const Contact = () => {
   return (
+
+    <div className="contact-us">
+
+        <div className="arr">
+            <Link to='/'><FaArrowLeftLong className='arr-i'/></Link>
+        </div>
     <div className='contact'>
+        
         <section className='contact-c'>
             <form className='form'>
                 <div className="form-c">
@@ -19,6 +29,8 @@ const Contact = () => {
 
             </form>
         </section>
+    </div>
+
     </div>
   )
 }

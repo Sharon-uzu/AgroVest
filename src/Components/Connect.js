@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Connect = () => {
   return (
@@ -7,8 +8,8 @@ const Connect = () => {
             <div className='connect-text'>
                 <h2>Connect with AgroVest to a world of possibilities</h2>
                 <div className='more'>
-                    <a href=""><button>Learn more</button></a>
-                    <a href=""><button className='btn2'>Contact Us</button></a>
+                    {/* <a href=""><button>Learn more</button></a> */}
+                    <Link to='/contact'><button className='btn2'>Contact Us</button></Link>
                 </div>
             </div>
         </div>

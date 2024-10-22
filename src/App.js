@@ -1,21 +1,87 @@
 import './App.css';
 import Home from './Screens/Home';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Overview from './Screens/Overview';
 import Contact from './Screens/Contact';
 import FarmerSignUp from './Screens/FarmerSignUp';
-import SellerSignup from './Screens/SellerSignup';
+import BuyerSignup from './Screens/BuyerSignup';
+import FarmerLogin from './Screens/FarmerLogin';
+import BuyerLogin from './Screens/BuyerLogin';
+import Dashboard from './Screens/Dashboard';
+import Product from './Screens/Product';
+import Transaction from './Screens/Transaction';
+import Settings from './Screens/Settings';
+import Help from './Screens/Help';
+import FarmersWithdrawal from './Screens/FarmersWithdrawal';
+import AdminDashboard from './Screens/AdminDashboard';
+import AdminProducts from './Screens/AdminProducts';
+import UnapprovedFarmers from './Screens/UnapprovedFarmers';
+import Farmers from './Screens/Farmers';
+import AdminTransaction from './Screens/AdminTransaction';
+import AdminWithdrawal from './Screens/AdminWithdrawal';
+import CheckOut from './Components/CheckOut';
+import AgroFarm from './Screens/AgroFarm';
+import AgroFarmOverview from './Screens/AgroFarmOverview';
+import AgroFarmProducts from './Screens/AgroFarmProducts';
+import AllProducts from './Screens/AllProducts';
+import UnapproveProduct from './Screens/UnapproveProduct';
 
 function App() {
+
+  const [join, setJoin] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  
   return (
     <div>
       <Routes>
 
-        <Route path='/' element={<Home/>} />
-        <Route path='/overview' element={<Overview/>} />
+      <Route 
+          path="/" 
+          element={<Home 
+            join={join} 
+            loggedIn={loggedIn} 
+            userDetails={userDetails} 
+          />} 
+        />
+        <Route 
+          path="/buyerLogin" 
+          element={<BuyerLogin 
+            setJoin={setJoin} 
+            setLoggedIn={setLoggedIn} 
+            setUserDetails={setUserDetails} 
+          />} 
+        />
+        <Route path='/agroverview' element={<AgroFarmOverview/>} />
+        <Route path='/all-products' element={<AllProducts/>} />
+        <Route path='/overview/:id' element={<Overview/>} />
         <Route path='/contact' element={<Contact/>} />
+        <Route path='/agrofarm' element={<AgroFarm/>} />
+        <Route path='/checkout' element={<CheckOut/>} />
+        <Route path='/checkout' element={<CheckOut/>} />
         <Route path='/farmerSignup' element={<FarmerSignUp/>} />
-        <Route path='/sellerSignup' element={<SellerSignup/>} />
+        <Route path='/buyerSignup' element={<BuyerSignup/>} />
+        <Route path='/farmerlogin' element={<FarmerLogin/>} />
+        {/* <Route path='/buyerlogin' element={<BuyerLogin/>} /> */}
+        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/product' element={<Product/>} />
+        <Route path='/transaction' element={<Transaction/>} />
+        <Route path='/settings' element={<Settings/>} />
+        <Route path='/help' element={<Help/>} />
+        <Route path='/withdrawal' element={<FarmersWithdrawal/>} />
+
+
+
+        <Route path='/admin' element={<AdminDashboard/>} />
+        <Route path='/unapproved-product' element={<UnapproveProduct/>} />
+        <Route path='/adminproducts' element={<AdminProducts/>} />
+        <Route path='/unapprove' element={<UnapprovedFarmers/>} />
+        <Route path='/farmers' element={<Farmers/>} />
+        <Route path='/admin-transaction' element={<AdminTransaction/>} />
+        <Route path='/admin-withdrawal' element={<AdminWithdrawal/>} />
+        <Route path='/agrofarmproducts' element={<AgroFarmProducts/>} />
+
 
       </Routes>
       

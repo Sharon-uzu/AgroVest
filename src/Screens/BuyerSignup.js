@@ -1,4 +1,3 @@
-
 import React,{useState, useEffect} from 'react'
 import pix from '../Images/pix.png'
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -6,34 +5,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Supabase } from "../config/supabase-config";
 
 
-const FarmerSignUp = () => {
-
-    const [info1, setInfo1] = useState(true)
-    const [info2, setInfo2] = useState(false)
-
-    function moreInfo(){
-        setInfo1(false);
-        setInfo2(true);
-    }
+const BuyerSignup = () => {
 
     const navigate = useNavigate();
 
     const login = () => {
-        navigate('/farmerlogin')
+        navigate('/buyerlogin')
       }
 
       const initialValues = {
         fullname: "",
         email: "",
-        role: "farmer",
+        role: "buyer",
         phone: "",
-        // companyName: "",
         address: "",
         password: "",
         
       };
 
-    const [formData, setFormData] = useState(initialValues);
+      const [formData, setFormData] = useState(initialValues);
 
     const [formErrors, setFormErrors] = useState({});
 
@@ -72,12 +62,12 @@ const FarmerSignUp = () => {
               email: formData.email,
               password: formData.password,
               metadata: formData,
-              role:'farmer'
+              role: "buyer",
             },
           ])
           .then((response) => {
             console.log(response);
-            navigate("/farmerlogin");
+            navigate("/buyerlogin");
           })
           .catch((error) => {
             console.error("Error during signup:", error);
@@ -109,8 +99,8 @@ const FarmerSignUp = () => {
         } else if (!values.address) {
           errors.address = "Fill in your address";
         }else if (!values.password) {
-          errors.password = "Password is required";
-        }
+            errors.password = "Password is required";
+          }
           // else{
           //   Supabase.from("agrovest-main")
           //       .upsert([
@@ -119,12 +109,12 @@ const FarmerSignUp = () => {
           //           email: formData.email,
           //           password: formData.password,
           //           metadata: formData,
-          //           role:'farmer'
+          //           role:'buyer'
           //         },
           //       ])
           //       .then((response) => {
           //         console.log(response);
-          //         navigate("/farmerlogin");
+          //         navigate("/buyerlogin");
           //       });
           //         }
             return errors;
@@ -145,10 +135,9 @@ const FarmerSignUp = () => {
                 <div className='sign'>
                     <div className='form'>
                         <div className="form-c">
-                                
                             <h3>Create an Account</h3>
                             <label htmlFor="name">
-                                <p>Full Name/Farm Name</p>
+                                <p>Full Name</p>
                                 <input type="text" 
                                 value={formData.fullname}
                                 onChange={(e) => {
@@ -161,19 +150,6 @@ const FarmerSignUp = () => {
 
                             </label>
 
-                            {/* <label htmlFor="name">
-                                <p>Company’s Name</p>
-                                <input type="text" placeholder="Dee's Farm"
-                                value={formData.companyName}
-                                onChange={(e) => {
-                                  setFormData({
-                                    ...formData,
-                                    companyName: e.target.value,
-                                  });
-                                }}/>
-                                <p style={{ color: "red", fontSize: "14px", margin:0, padding:0, textAlign:'start', marginTop:'2px' }}>{formErrors.companyName}</p>
-
-                            </label> */}
 
                             <label htmlFor="name">
                                 <p>Email</p>
@@ -189,19 +165,6 @@ const FarmerSignUp = () => {
 
                             </label>
 
-                            <label htmlFor="name">
-                                <p>Location</p>
-                                <input type="text" 
-                                value={formData.address}
-                                onChange={(e) => {
-                                  setFormData({
-                                    ...formData,
-                                    address: e.target.value,
-                                  });
-                                }}/>
-                                <p style={{ color: "red", fontSize: "14px", margin:0, padding:0, textAlign:'start', marginTop:'2px' }}>{formErrors.address}</p>
-
-                            </label>
 
                             <label htmlFor="name">
                                 <p>Phone Number</p>
@@ -214,6 +177,20 @@ const FarmerSignUp = () => {
                                   });
                                 }}/>
                                 <p style={{ color: "red", fontSize: "14px", margin:0, padding:0, textAlign:'start', marginTop:'2px' }}>{formErrors.phone}</p>
+
+                            </label>
+
+                            <label htmlFor="name">
+                                <p>Location</p>
+                                <input type="text" 
+                                value={formData.address}
+                                onChange={(e) => {
+                                  setFormData({
+                                    ...formData,
+                                    address: e.target.value,
+                                  });
+                                }}/>
+                                <p style={{ color: "red", fontSize: "14px", margin:0, padding:0, textAlign:'start', marginTop:'2px' }}>{formErrors.address}</p>
 
                             </label>
 
@@ -234,54 +211,7 @@ const FarmerSignUp = () => {
                             <div className="sign-btn">
                                 <button type="submit" onClick={handleSubmit}>Create Account</button>
                             </div>
-
-
-
-                            {/* {
-                            info2 ? (<>
-                            <h3>Additional Information</h3>
-
-                            <label htmlFor="identification">
-                                <p>Upload means of identification</p>
-                                <input type="file" />
-                            </label>
-
-
-                            <label htmlFor="name">
-                                <p>Upload your picture</p>
-                                <input type="file" />
-                            </label>
-
-                            <label htmlFor="name">
-                                <p>Select Card option</p>
-                                <select name="" id="">
-                                    <option value="Debit card">Debit card</option>
-                                    <option value="Credit card">Credit card</option>
-                                </select>
-                            </label>
-
-                            <label htmlFor="name">
-                                <p>Account Number</p>
-                                <input type="text" />
-                            </label>
-
-                            <label htmlFor="name">
-                                <p>Bank</p>
-                                <input type="text" />
-                            </label>
-
-                            <label htmlFor="name">
-                                <p>Card holder Name</p>
-                                <input type="text" />
-                            </label>
-
-                            <div className="sign-btn">
-                                <button type="submit" onClick={login}>Create Account</button>
-                            </div>
-                            </>) : null
-                            } */}
-                            <span>Already have an account? <Link to="/farmerlogin">Login</Link></span>
-
+                            <span>Already have an account? <Link to="/buyerlogin">Login</Link></span>
 
                         </div>
                     </div>
@@ -293,4 +223,4 @@ const FarmerSignUp = () => {
   )
 }
 
-export default FarmerSignUp
+export default BuyerSignup

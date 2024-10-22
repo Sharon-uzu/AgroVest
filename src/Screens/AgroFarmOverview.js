@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Supabase } from "../config/supabase-config"; 
+import React,{useState} from 'react'
 import Header from '../Components/Header';
 import { FaStar } from "react-icons/fa6";
 import img from '../Images/ov.png'
@@ -13,62 +11,15 @@ import food1 from '../Images/p3.png'
 import food2 from '../Images/p1.png'
 
 
-
-
-const Overview = () => {
-
-
-    const { id } = useParams(); // Get the product ID from the URL
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const AgroFarmOverview = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => {
         setIsOpen(!isOpen);
     };
 
-
-    useEffect(() => {
-        const fetchProductDetails = async () => {
-          try {
-            const { data, error } = await Supabase
-              .from('agrovest-products')
-              .select('*')
-              .eq('id', id)
-              .single(); // Fetch a single product based on ID
-    
-            if (error) {
-              setError(error.message);
-              setLoading(false);
-              return;
-            }
-    
-            setProduct(data);
-            setLoading(false);
-          } catch (error) {
-            setError(error.message);
-            setLoading(false);
-          }
-        };
-    
-        fetchProductDetails();
-      }, [id]);
-    
-      if (loading) {
-        return <div>Loading...</div>;
-      }
-    
-      if (error) {
-        return <div>Error: {error}</div>;
-      }
-    
-      if (!product) {
-        return <div>No product found</div>;
-      }
-    
   return (
-    <div className='p-o'>
+      <div className='p-o'>
         {/* <Header/> */}
         <div className="arr">
             <Link to='/'><IoIosArrowBack className='arr-i'/>Back</Link>
@@ -76,22 +27,21 @@ const Overview = () => {
         <section className='overview'>
             <h2>Garri - Product Overview</h2>
             <div className="img">
-            <img src={`https://wgfidvtzcblzcnstkyae.supabase.co/storage/v1/object/public/agrovest-product-images/${product.image}`} alt={product.productname} />
-
+                <img src={img} alt="" />
             </div>
 
             <div className="overview-c">
-                <p>Product: <span>{product.productname}</span></p>
-                <p>Place of Production: <span>{product.metadata.location}</span></p>
-                <p>Availability:  <span>{product.availability}</span></p>
-                <p>Preservative: <span>{product.metadata.preservative}</span></p>
+                <p>Product: <span>Garri</span></p>
+                <p>Place of Production: <span>Rivers State / Eleme LGA</span></p>
+                <p>Availability:  <span>Still in Stock</span></p>
+                <p>Preservative: <span> No</span></p>
 
                 <h4>Summary</h4>
-                <h5>{product.metadata.description}</h5>
+                <h5>Garri is a staple food in West Africa, made from cassava. It undergoes a process of peeling, grating, fermentation, sieving, and roasting to produce the final product. Our garri is produced under strict quality control measures and packaged to maintain freshness. It is versatile, gluten-free, and rich in carbohydrates, making it an excellent energy source. Our commitment to sustainability and ethical sourcing ensures that our garri supports local farmers and communities. Available for purchase online and in select stores.</h5>
 
                 <div className="quan-price">
                     <div className="quan">
-                        <h5>₦{product.metadata.price}</h5>
+                        <h5>N5000</h5>
                         <span className='cal'>
                             <span>-</span>
                             <span>1</span>
@@ -99,7 +49,7 @@ const Overview = () => {
                         </span>
                     </div>
 
-                    {/* <div className="price">
+                    <div className="price">
                         <h6>One custard rubber</h6>
                         <span className='stars'>
                             <FaStar className='p-i'/>
@@ -107,7 +57,7 @@ const Overview = () => {
                             <FaStar className='p-i'/>
                             <FaStar className='p-i'/>
                         </span>
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="buttons">
@@ -122,8 +72,7 @@ const Overview = () => {
         <Modal
         isOpen={isOpen}
         onRequestClose={toggleModal}
-        contentLabel="Image Modal"
-        overlayClassName="modal-overlay"
+        contentLabel="Example Modal"
         className="two"
         style={{
           overlay: {
@@ -151,7 +100,6 @@ const Overview = () => {
                 </div>
 
                 {/* <CheckOut/> */}
-
                 {/* Checkout */}
 
                 <div className="checkout">
@@ -242,4 +190,4 @@ const Overview = () => {
   )
 }
 
-export default Overview
+export default AgroFarmOverview
