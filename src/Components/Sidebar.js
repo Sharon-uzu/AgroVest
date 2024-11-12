@@ -144,6 +144,18 @@ const Sidebar = (props) => {
                 </NavLink>
 
 
+                <NavLink to='/farmerswithdrawalhistory' className='link links' activeclassName = 'active'>
+                
+                    <div className='one'>
+                    
+                        <GiReceiveMoney className='icon'/>
+                        <h4 style={{display:isOpen ? "none" : "block"}}>Withdrawal History</h4>
+
+                    </div>
+                
+                </NavLink>
+
+
                 <NavLink to='/settings' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
@@ -155,16 +167,7 @@ const Sidebar = (props) => {
                 
                 </NavLink>
 
-                <NavLink to='/contact' className='link links' activeclassName = 'active'>
                 
-                    <div className='one'>
-                    
-                        <FaRegCircleQuestion className='icon'/>
-                        <h4 style={{display:isOpen ? "none" : "block"}}>Help</h4>
-
-                    </div>
-                
-                </NavLink>
 
 
         

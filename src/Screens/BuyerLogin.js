@@ -34,62 +34,46 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+      
         const errors = validate(formData);
         setFormErrors(errors);
-
-        if (Object.keys(errors).length > 0) {
-            return; // Stop submission if there are validation errors
-        }
-
+      
+        if (Object.keys(errors).length > 0) return;
+      
         try {
-            const { data, error } = await Supabase
-                .from("agrovest-main")
-                .select("*")
-                .eq("email", formData.email)
-                .eq("password", formData.password)
-                .single();
-
-            if (error) {
-                console.error("Supabase error:", error.message, error.details);
-                alert("Error fetching user or incorrect login details");
-                return;
-            }
-
-            if (!data) {
-                console.error("User not found");
-                alert("User not found");
-                return;
-            }
-
-            // Assuming `metadata` is a JSON object containing phone and address
-            const { metadata } = data;
-            const phone = metadata?.phone || "No phone number provided";
-            const address = metadata?.address || "No address provided";
-
-            // Save user details to state or localStorage
-            const userDetails = {
-                name: data.fullname,
-                email: data.email,
-                phone: phone,
-                address: address,
-            };
-
-            // Update parent component state with logged-in user details
-            setLoggedIn(true); // Mark the user as logged in
-            setUserDetails(userDetails); // Pass user details to parent
-
-            // Save user ID to localStorage
-            localStorage.setItem("userId", data.id);
-            localStorage.setItem("userDetails", JSON.stringify(userDetails));
-
-            // Navigate to Home page
-            navigate("/");
+          const { data, error } = await Supabase
+            .from("agrovest-main")
+            .select("*")
+            .eq("email", formData.email)
+            .eq("password", formData.password)
+            .single();
+      
+          if (error || !data) {
+            alert("Incorrect login details or user not found");
+            return;
+          }
+      
+          const { metadata } = data;
+          const phone = metadata?.phone || "No phone number provided";
+          const address = metadata?.address || "No address provided";
+      
+          const userDetails = {
+            name: data.fullname,
+            email: data.email,
+            phone,
+            address,
+          };
+      
+          setLoggedIn(true);
+          setUserDetails(userDetails);
+          localStorage.setItem("userDetails", JSON.stringify(userDetails));
+      
+          navigate("/");
         } catch (error) {
-            console.error("Error during login:", error);
-            alert("Error during login");
+          alert("Error during login");
         }
-    };
+      };
+      
 
     return (
         <div>

@@ -68,7 +68,7 @@ const AdminProducts = () => {
           .from("agrovest-products")
           .select("*")
           // .eq("role", "farmer")
-          .eq("state", "approved");
+          .eq("state", "Approved");
 
         if (error) {
           setError(error.message);
@@ -93,7 +93,7 @@ const AdminProducts = () => {
     try {
       const { data, error } = await Supabase
         .from("agrovest-products")
-        .update({ state: 'suspend' }) // Set status to null
+        .update({ state: 'Pending' }) // Set status to null
         .eq("id", productId);
 
       if (error) {
@@ -109,8 +109,12 @@ const AdminProducts = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
   if (error) {
     return <div>Error: {error}</div>;

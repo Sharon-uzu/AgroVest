@@ -7,6 +7,7 @@ import three from '../Images/two.png';
 import one from '../Images/three.png';
 import { FaCheckCircle, FaRegCircle, FaCircle } from "react-icons/fa";
 import { Supabase } from "../config/supabase-config";
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const [see, setSee] = useState(false);
@@ -24,18 +25,28 @@ const Dashboard = () => {
       icon: one,
       number: '100',
       background: '#66f4b466',
+      link:"/product"
     },
     {
-      text: 'Shops',
+      text: 'Transaction',
       icon: two,
       number: '25',
       background: '#b7e37d66',
+      link:'/transaction'
     },
     {
-      text: 'Shop Manager',
+      text: 'Withdrawal',
       icon: three,
       number: '15',
       background: '#eba57a66',
+      link:'/withdrawal'
+    },
+    {
+      text: 'Settings',
+      icon: three,
+      number: '15',
+      background: '#b7e37d66',
+      link:'/settings'
     }
   ];
 
@@ -99,9 +110,17 @@ const Dashboard = () => {
     // return { status: "Not Verified!", color: "red" }; // Fallback case
   };
 
+  // if (!userInfo) {
+  //   return <div>Loading...</div>;
+  // }
+
   if (!userInfo) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
 
   const { notes } = getNotes(); // Get status and color
@@ -118,25 +137,25 @@ const Dashboard = () => {
           <Header2 title='Dashboard' status={status} statusColor={color}  notes={notes} notesColor={color} />
 
           <section className='left'>
-            <h2>Product Summary</h2>
+            <h2>Dashboard</h2>
 
             <div className='cards-container'>
-              {Cards.map(({ icon, text, background, number }, index) => (
-                <div className="cardss" key={index}>
+              {Cards.map(({ icon, text, background, link }, index) => (
+                <Link to={link} className="cardss" key={index}>
                   <div className='card1' style={{ backgroundColor: background }}>
                     <div className='icon-card'>
                       <img src={icon} alt={text} />
                     </div>
                     <div className='card-text'>
-                      <p>{text}</p>
-                      <h4>{number}</h4>
+                      {/* <p>{text}</p> */}
+                      <h4>{text}</h4>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
-            <div className="recent">
+            {/* <div className="recent">
               <h3>
                 Recent Activities
                 {less && <span onClick={toggle}>See All</span>}
@@ -185,7 +204,7 @@ const Dashboard = () => {
                   </div>
                 </>
               )}
-            </div>
+            </div> */}
           </section>
         </main>
       </section>

@@ -11,6 +11,7 @@ const UnapprovedFarmers = () => {
   const [selectedPersonnel, setSelectedPersonnel] = useState(null);
   const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [imageUrl, setImageUrl] = useState(""); // Store image URL
+  const [approvedPersonnel, setApprovedPersonnel] = useState([]);
 
   const toggleModal1 = () => {
     setIsModalOpen1(!isModalOpen1);
@@ -79,28 +80,66 @@ const UnapprovedFarmers = () => {
     fetchPersonnelData();
   }, []);
 
+  // const handleApprove = async (personId) => {
+  //   try {
+  //     const { data, error } = await Supabase
+  //       .from("agrovest-main")
+  //       .update({ status: "verified" })
+  //       .eq("id", personId);
+
+  //     if (error) {
+  //       console.error("Error updating status:", error);
+  //       return;
+  //     }
+
+  //     alert(`Farmer with ID ${personId} approved successfully.`);
+  //     setPersonnelData((prevData) => prevData.filter((person) => person.id !== personId));
+  //   } catch (error) {
+  //     console.error("Error updating status:", error);
+  //   }
+  // };
+
+
+
   const handleApprove = async (personId) => {
     try {
-      const { data, error } = await Supabase
+      // Step 1: Update farmer status to 'suspended' in agrovest-main table
+      const { data: farmerData, error: farmerError } = await Supabase
         .from("agrovest-main")
-        .update({ status: "verified" })
+        .update({ status: 'verified' })
         .eq("id", personId);
-
-      if (error) {
-        console.error("Error updating status:", error);
+  
+      if (farmerError) {
+        console.error("Error updating farmer status:", farmerError);
         return;
       }
-
-      alert(`Farmer with ID ${personId} approved successfully.`);
-      setPersonnelData((prevData) => prevData.filter((person) => person.id !== personId));
+  
+      // Step 2: Update associated products to reflect suspension
+      const { data: productData, error: productError } = await Supabase
+        .from("agrovest-products")
+        .update({ farmerstatus: 'verified' }) // Update farmerstatus to 'suspended'
+        .eq("userid", personId); // Filter products by farmer's userid
+  
+      if (productError) {
+        console.error("Error updating associated products:", productError);
+        return;
+      }
+  
+      // Remove the suspended farmer from the local state
+      setApprovedPersonnel((prevData) => prevData.filter((person) => person.id !== personId));
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error suspending farmer and updating products:", error);
     }
   };
+  
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -188,3 +227,6 @@ const UnapprovedFarmers = () => {
 }
 
 export default UnapprovedFarmers;
+
+
+

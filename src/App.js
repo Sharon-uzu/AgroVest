@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react';
 import Home from './Screens/Home';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -26,12 +27,43 @@ import AgroFarmOverview from './Screens/AgroFarmOverview';
 import AgroFarmProducts from './Screens/AgroFarmProducts';
 import AllProducts from './Screens/AllProducts';
 import UnapproveProduct from './Screens/UnapproveProduct';
+import { useParams, Link, useNavigate } from 'react-router-dom'; // import useNavigate
+import { Supabase } from "./config/supabase-config";
+import FarmerWithdrawalHistory from './Screens/FarmerWithdrawalHistory';
 
 function App() {
+
+  const navigate = useNavigate(); // initialize navigate
+
 
   const [join, setJoin] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
+
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const checkSession = async () => {
+        const { data: { session } } = await Supabase.auth.getSession();
+        if (session) {
+            setUser(session.user);
+        } else {
+            console.log("No active session");
+        }
+    };
+    checkSession();
+}, []);
+
+
+  useEffect(() => {
+    // Retrieve user details from localStorage
+    const storedDetails = localStorage.getItem("userDetails");
+    if (storedDetails) {
+      setUserDetails(JSON.parse(storedDetails));
+      setLoggedIn(true); // Set as logged in if user details are found
+    }
+  }, []);
   
   return (
     <div>
@@ -45,17 +77,12 @@ function App() {
             userDetails={userDetails} 
           />} 
         />
-        <Route 
-          path="/buyerLogin" 
-          element={<BuyerLogin 
-            setJoin={setJoin} 
-            setLoggedIn={setLoggedIn} 
-            setUserDetails={setUserDetails} 
-          />} 
-        />
+        <Route path="/buyerLogin" element={<BuyerLogin setJoin={setJoin} setLoggedIn={setLoggedIn} setUserDetails={setUserDetails} />} />
+
         <Route path='/agroverview' element={<AgroFarmOverview/>} />
         <Route path='/all-products' element={<AllProducts/>} />
-        <Route path='/overview/:id' element={<Overview/>} />
+        <Route path='/overview/:id' element={<Overview join={join} loggedIn={loggedIn} userDetails={userDetails} />} />
+
         <Route path='/contact' element={<Contact/>} />
         <Route path='/agrofarm' element={<AgroFarm/>} />
         <Route path='/checkout' element={<CheckOut/>} />
@@ -70,7 +97,7 @@ function App() {
         <Route path='/settings' element={<Settings/>} />
         <Route path='/help' element={<Help/>} />
         <Route path='/withdrawal' element={<FarmersWithdrawal/>} />
-
+        <Route path='/farmerswithdrawalhistory' element={<FarmerWithdrawalHistory/>} />
 
 
         <Route path='/admin' element={<AdminDashboard/>} />

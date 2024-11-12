@@ -171,8 +171,12 @@ const Settings = () => {
   };
 
   if (!userInfo) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
   const { status, color } = getVerificationStatus(); // Get status and color
 

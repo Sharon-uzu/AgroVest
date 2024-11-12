@@ -21,7 +21,7 @@ const AllProducts = () => {
                   .select('*')
                   .eq('availability', 'In-stock') // Filter for availability
                   .eq('farmerstatus', 'verified') // Filter for farmerstatus
-                  .eq('state', 'approved') // Filter for state
+                  .eq('state', 'Approved') // Filter for state
                   // .limit(4); // Limit to 4 products
   
               if (error) {

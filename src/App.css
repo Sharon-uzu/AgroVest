@@ -11,6 +11,38 @@ body{
   background-color: #fcfcff;
 }
 
+
+/* Loader Container */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Make sure it's on top of other elements */
+}
+
+/* Spinning Loader */
+.spinner {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #FD721B; /* Blue color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+
+/* Spin animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
 /* NAVBAR STARTS HERE*/
 
 header{
@@ -168,7 +200,7 @@ header nav ul .first-list .drop::before{
   justify-content: flex-end;
 }
 .dp-modal{
-  width: 25%;
+  width: 45%;
   background-color: #fff;
 }
 .h-modal .content-m{
@@ -208,7 +240,11 @@ header nav ul .first-list .drop::before{
 
 .h-modal .content-m .history{
   margin-top: 50px;
-  height: 50vh;
+ 
+}
+
+.h-modal .content-m .history .h-table{
+  height: 35vh;
   overflow-y: scroll;
 }
 
@@ -231,11 +267,13 @@ header nav ul .first-list .drop::before{
 .h-modal .content-m .history .h-heading span{
   font-weight: 700;
   color: #FD721B;
+  text-align: center;
 }
 
 .h-modal .content-m .history .his span{
   font-size: 15px;
   width: 30%;
+  text-align: center;
 }
 
 .h-modal .content-m .logout{
@@ -840,6 +878,7 @@ header nav ul .first-list .drop::before{
   font-size: 17px;
   font-weight: 400;
   line-height: 28.98px;
+  cursor: pointer;
 
 }
 .overview .overview-c .price{
@@ -1108,7 +1147,7 @@ header nav ul .first-list .drop::before{
   overflow-y: scroll;
 }
 .checkout-section{
-  width: 80%;
+  width: 50%;
   margin: auto;
   background-color: #fff;
   padding: 30px 0;
@@ -1139,8 +1178,9 @@ header nav ul .first-list .drop::before{
 }
 
 .checkout-section .checkout .check{
-  width: 44%;
-  background-color: #fff;
+  width: 95%;
+  margin: auto;
+  background-color:#fff;
   padding: 15px 0;
 }
 
@@ -1149,13 +1189,13 @@ header nav ul .first-list .drop::before{
   margin-bottom: 20px;
 }
 
-.checkout-section .checkout .check form{
+.checkout-section .checkout .check .formm{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.checkout-section .checkout .check form input{
+.checkout-section .checkout .check .formm input{
   width: 100%;
   margin-bottom: 25px;
   border: 1px solid #49454F;
@@ -1166,7 +1206,7 @@ header nav ul .first-list .drop::before{
 
 }
 
-.checkout-section .checkout .check form select{
+.checkout-section .checkout .check .formm select{
   width: 100%;
   margin-bottom: 25px;
   border: 1px solid #49454F;
@@ -1177,31 +1217,31 @@ header nav ul .first-list .drop::before{
 }
 
 
-.checkout-section .checkout .check form .exp{
+.checkout-section .checkout .check .formm .exp{
   width: 70%;
 }
 
 
-.checkout-section .checkout .check form .cvv{
+.checkout-section .checkout .check .formm .cvv{
   width: 25%;
 }
 
-.checkout-section .checkout .check form div{
+.checkout-section .checkout .check .formm div{
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.checkout-section .checkout .check form div h4{
+.checkout-section .checkout .check .formm div h4{
   font-size: 17px;
 }
 
-.checkout-section .checkout .check form div h3{
+.checkout-section .checkout .check .formm div h3{
   font-size: 19px;
 }
 
-.checkout-section .checkout .check form button{
+.checkout-section .checkout .check .formm button{
   margin-top: 20px;
   width: 100%;
   border: none;
@@ -1391,6 +1431,8 @@ header nav ul .first-list .drop::before{
   display: flex;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none;
+  color: #000;
   
 }
 .dashb .dashboard main .cards-container .card1{
@@ -1437,7 +1479,7 @@ header nav ul .first-list .drop::before{
  }
 
  .dashb .dashboard main .cards-container .card1 .card-text h4{
-  font-size: 34px;
+  font-size: 22px;
   font-weight: 700;
  }
 
@@ -1609,12 +1651,35 @@ header nav ul .first-list .drop::before{
   background-color: #FEB800;
   border-radius: 10px;
 }
+
+.side .one:hover{
+  background-color: #FD721B
+}
+.side .one:hover h4{
+  color: #fff
+}
+.side .one:hover .icon{
+  color: #fff
+}
+.side .active .one{
+  border-radius: 10px;
+  background-color: #FD721B
+  /* background-color: #fff; */
+
+}
 .side .active .one{
   
   border-radius: 10px;
   background-color: #FD721B
   /* background-color: #fff; */
 
+}
+.side .active .one .icon{
+  color: #fff;
+}
+
+.side .active .one h4{
+  color: #fff;
 }
 
 
@@ -2045,8 +2110,16 @@ header nav ul .first-list .drop::before{
   border-radius: 10px;
 }
 
+.dashb .dashboard main .earnings .history table .t-row .action{
+  background-color: #006738;
+  color: #fff;
+  padding: 6px;
+  border-radius: 3px;
+  border: none;
+}
+
 .dashb .dashboard main .earnings .history th{
-  width:12%;
+  width:10%;
   text-align: left;
   font-size: 15px;
   font-weight: 500;
@@ -2054,14 +2127,15 @@ header nav ul .first-list .drop::before{
 
 }
 
-.dashb .dashboard main .earnings .history table tr th:nth-child(1){
-  width: 15%;
+
+.dashb .dashboard main .earnings .history table tr th:nth-child(2){
+  width: 25%;
 }
 
 
 
 .dashb .dashboard main .earnings .history table tr td{
-  width: 12%;
+  width: 10%;
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
@@ -2070,8 +2144,15 @@ header nav ul .first-list .drop::before{
 
 }
 
-.dashb .dashboard main .earnings .history table tr td:nth-child(1){
-  width: 15%;
+.dashb .dashboard main .earnings .history table tr td:nth-child(2){
+  width: 25%;
+}
+
+.dashb .dashboard main .earnings .history .c-name{
+  width: 20%;
+}
+.dashb .dashboard main .earnings .history .date{
+  width: 20%;
 }
 
 /* not verified */
@@ -2413,6 +2494,15 @@ header nav ul .first-list .drop::before{
   border: none;
  }
 
+ .dashb .dashboard .tabb table tr .dt .unapp{
+  background-color: #006738;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+ }
+
 
 /* Product details modal */
 .modal1{
@@ -2478,6 +2568,56 @@ header nav ul .first-list .drop::before{
   margin: auto;
 }
 
+/* Withdrawal History */
+.with-history{
+  width: 93%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.with-history h6{
+  font-size: 20.55px;
+  font-weight: 500;
+  line-height: 30.83px;
+  color: #49454F;
+  margin-bottom: 15px;
+}
+
+.with-history .tb{
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  border: 0.93px solid #EBEBEE;
+  border-radius: 20px;
+  padding: 20px 0;
+}
+
+
+.with-history tr{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  /* border-top: 0.93px solid #D5D9DD; */
+  border-collapse: collapse;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.with-history tr th{
+  width: 30%;
+  text-align: center;
+}
+.with-history tr td{
+  width: 30%;
+  text-align: center;
+}
+.with-history .tb table{
+  width: 97%;
+  margin: auto;
+  border-collapse: collapse;
+}
+
 @media screen and (max-width:1200px){
   header nav ul{
     width: 70%;
@@ -2541,6 +2681,9 @@ header nav ul .first-list .drop::before{
 
   .sign-up .s-r .sign .form{
     width: 90%;
+  }
+  .dp-modal{
+    width: 60%;
   }
 
 }
@@ -2682,6 +2825,9 @@ header nav ul .first-list .drop::before{
 }
 
 @media screen and (max-width:700px){
+  .dp-modal{
+    width: 75%;
+  }
   .abt{
     width: 90%;
     flex-direction: column;
@@ -2828,6 +2974,9 @@ header nav ul .first-list .drop::before{
 }
 
 @media screen and (max-width:500px){
+  .dp-modal{
+    width: 90%;
+  }
   header nav .logo img {
     width: 80%;
   }
@@ -2884,10 +3033,10 @@ header nav ul .first-list .drop::before{
   .checkout-section .checkout .check h2{
     font-size: 22px;
   }
-  .checkout-section .checkout .check form div h4{
+  .checkout-section .checkout .check .formm div h4{
     font-size: 15px;
   }
-  .checkout-section .checkout .check form div h3{
+  .checkout-section .checkout .check .formm div h3{
     font-size: 16px;
   }
   .checkout-section .checkout .out .content p{
@@ -2915,7 +3064,19 @@ header nav ul .first-list .drop::before{
 
 }
 
+
 @media screen and (max-width:400px){
+
+  .h-modal .content-m .history{
+    width: 100%;
+    overflow-x: auto;
+  }
+  .h-modal .content-m .history .h-heading{
+    min-width: 370px;
+  }
+  .h-modal .content-m .history .h-table{
+    min-width: 370px;
+  }
 
   .dashb .dashboard main .cards-container .cardss{
     width: 100%;

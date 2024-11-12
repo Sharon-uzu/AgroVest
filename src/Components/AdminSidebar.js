@@ -108,7 +108,7 @@ const AdminSidebar = () => {
 
 
 
-                <NavLink to='/agrofarmproducts' className='link links' activeclassName = 'active'>
+                {/* <NavLink to='/agrofarmproducts' className='link links' activeclassName = 'active'>
                 
                 <div className='one'>
                 
@@ -117,7 +117,7 @@ const AdminSidebar = () => {
 
                 </div>
             
-            </NavLink>
+            </NavLink> */}
 
            
 

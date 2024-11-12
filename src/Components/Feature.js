@@ -18,7 +18,7 @@ const Feature = () => {
           .select('*')
           .eq('availability', 'In-stock') // Filter for availability
             .eq('farmerstatus', 'verified') // Filter for farmerstatus
-            .eq('state', 'approved')  // Filter for availability
+            .eq('state', 'Approved')  // Filter for availability
           .limit(4); // Limit to 8 products
 
         if (error) {

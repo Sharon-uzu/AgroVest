@@ -5,49 +5,46 @@ import Modal from "react-modal";
 import { Supabase } from "../config/supabase-config";
 
 const UnapproveProduct = () => {
-
-    const [productData, setProductData] = useState([]);
+  const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isModalOpen1, setIsModalOpen1] = useState(false);
-  const [imageUrl, setImageUrl] = useState(""); // Store image URL
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
-  const toggleModal1 = () => {
-    setIsModalOpen1(!isModalOpen1);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   const closeModal = () => {
     setSelectedProduct(null);
-    setIsModalOpen1(false);
+    setIsModalOpen(false);
   };
 
   const openModal = (product) => {
     setSelectedProduct(product);
     const imagePath = product.metadata?.image;
     if (imagePath) {
-      fetchImage(imagePath); // Fetch the image URL using the image path
+      fetchImage(imagePath);
     } else {
       console.error("Image path not found in metadata");
     }
-    setIsModalOpen1(true);
+    setIsModalOpen(true);
   };
 
   const fetchImage = async (imageName) => {
     try {
       const { data, error } = await Supabase
         .storage
-        .from('agrovest-product-images') // Bucket name
-        .getPublicUrl(imageName); // Pass the image name
+        .from('agrovest-product-images')
+        .getPublicUrl(imageName);
 
       if (error) {
         console.error("Error fetching image:", error.message);
+      } else if (data.publicUrl) {
+        setImageUrl(data.publicUrl);
       } else {
-        if (data.publicUrl) {
-          setImageUrl(data.publicUrl); // Set the public URL for the image
-        } else {
-          console.error("Public URL not found");
-        }
+        console.error("Public URL not found");
       }
     } catch (error) {
       console.error("Error fetching image:", error.message);
@@ -60,8 +57,7 @@ const UnapproveProduct = () => {
         const { data, error } = await Supabase
           .from("agrovest-products")
           .select("*")
-        //   .eq("role", "farmer")
-        .or('state.is.null, state.eq.suspend');;
+          .or('state.eq.Pending, state.eq.Rejected');
 
         if (error) {
           setError(error.message);
@@ -80,11 +76,11 @@ const UnapproveProduct = () => {
     fetchProductData();
   }, []);
 
-  const handleApprove = async (productId) => {
+  const updateProductStatus = async (productId, status) => {
     try {
-      const { data, error } = await Supabase
+      const { error } = await Supabase
         .from("agrovest-products")
-        .update({ state: "approved" })
+        .update({ state: status })
         .eq("id", productId);
 
       if (error) {
@@ -92,8 +88,12 @@ const UnapproveProduct = () => {
         return;
       }
 
-      alert(`Product with ID ${productId} approved successfully.`);
-      setProductData((prevData) => prevData.filter((product) => product.id !== productId));
+      alert(`Product status updated to ${status}.`);
+      setProductData((prevData) =>
+        prevData.map((product) =>
+          product.id === productId ? { ...product, state: status } : product
+        )
+      );
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -112,34 +112,58 @@ const UnapproveProduct = () => {
       <section className='dashboard'>
         <AdminSidebar />
         <main>
-          <Header2 title='Unapproved Farmers' />
+          <Header2 title='Manage Product Approvals' />
 
           <section className='left prod'>
             <div className="tabb">
               <table>
-                <tr className='heading'>
-                  <th>Product Name</th>
-                  <th>Price</th>
-                  <th className='dt'></th>
-                  <th className='dt'></th>
-                </tr>
-
-                {productData.map((product) => (
-                  <tr style={{ cursor: 'pointer' }} key={product.id}>
-                    <td>{product.productname}</td>
-                    <td>{product.price}</td>
-                    <td className='dt' onClick={() => openModal(product)}><button>View</button></td>
-                    <td className='dt'><button onClick={() => handleApprove(product.id)}>Approve</button></td>
+                <thead>
+                  <tr className='heading'>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th className='dt'></th>
+                    <th className='dt'></th>
                   </tr>
-                ))}
+                </thead>
+                <tbody>
+                  {productData.map((product) => (
+                    <tr key={product.id} style={{ cursor: 'pointer' }}>
+                      <td>{product.productname}</td>
+                      <td>{product.price}</td>
+                      <td>{product.state}</td>
+                      <td className='dt'>
+                        <button onClick={() => openModal(product)}>View</button>
+                      </td>
+                      <td className='dt'>
+                        {product.state === 'Pending' ? (
+                          <select className='unapp'
+                            onChange={(e) =>
+                              updateProductStatus(product.id, e.target.value)
+                            }
+                            defaultValue=""
+                          >
+                            <option value="" disabled>
+                              Set Status
+                            </option>
+                            <option value="Approved">Approve</option>
+                            <option value="Rejected">Reject</option>
+                          </select>
+                        ) : (
+                          product.state
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
 
             <Modal
-              isOpen={isModalOpen1}
-              onRequestClose={toggleModal1}
-              contentLabel="Example Modal"
-              className={`bg-transparnt`}
+              isOpen={isModalOpen}
+              onRequestClose={toggleModal}
+              contentLabel="Product Details Modal"
+              className={`bg-transparent`}
               style={{
                 overlay: {
                   position: "fixed",
@@ -155,7 +179,7 @@ const UnapproveProduct = () => {
               <div className='modal1'>
                 <div className='modal1-content'>
                   <div className='close'>
-                    <button onClick={() => setIsModalOpen1(false)} style={{ cursor: 'pointer' }}>X</button>
+                    <button onClick={closeModal} style={{ cursor: 'pointer' }}>X</button>
                   </div>
 
                   {selectedProduct && (
@@ -186,7 +210,7 @@ const UnapproveProduct = () => {
         </main>
       </section>
     </div>
-  )
+  );
 }
 
-export default UnapproveProduct
+export default UnapproveProduct;

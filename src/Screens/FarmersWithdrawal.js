@@ -1,13 +1,16 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import Header2 from '../Components/Header2';
 import Sidebar from '../Components/Sidebar';
-import circle from '../Images/Logo-1.png'
-import symbol from '../Images/MasterCard.png'
+import circle from '../Images/Logo-1.png';
+import symbol from '../Images/MasterCard.png';
 import { Supabase } from "../config/supabase-config";
 
 const FarmersWithdrawal = () => {
-
-    const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [amount, setAmount] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -20,7 +23,7 @@ const FarmersWithdrawal = () => {
       try {
         const { data, error } = await Supabase
           .from("agrovest-main")
-          .select("*")
+          .select("*, metadata->acctNo, metadata->accountName, balance, password")
           .eq("id", userId)
           .single();
 
@@ -41,119 +44,144 @@ const FarmersWithdrawal = () => {
   const getInitials = (fullname) => {
     if (!fullname) return '';
     return fullname
-      .split(' ') // Split full name by spaces into an array of words
-      .map(word => word[0].toUpperCase()) // Get the first letter of each word and convert to uppercase
-      .join(''); // Join the initials together
+      .split(' ')
+      .map(word => word[0].toUpperCase())
+      .join('');
   };
 
-  const getVerificationStatus = () => {
-    if (!userInfo || userInfo.status === null) {
-      return { status: "Not Verified!", color: "red" };
-    } else if (userInfo.status === "verified") {
-      return { status: "Verified!", color: "green" };
-    }else if (userInfo.status === "pending") {
-      return 'Your verification form has already been submitted. Thank you!';
-    } else if (userInfo.status === "suspended") {
-      return { status: "Suspended!", color: "orange" };
-    }
-    return { status: "Not Verified!", color: "red" }; // Fallback case
+  // Determine user verification status
+  const getUserVerificationStatus = () => {
+    if (!userInfo) return { status: "Loading...", color: "grey" };
+    if (userInfo.status === "verified") return { status: "Verified", color: "green" };
+    if (userInfo.status === "suspended") return { status: "Suspended", color: "orange" };
+    return { status: "Not Verified", color: "red" };
   };
 
-  const getNotes = () => {
-    if (!userInfo || userInfo.status === null) {
-      return { notes: "(Note: Verify your account on the settings page for your products to be uploaded on our website.)", color: "red" };
-    } else if (userInfo.status === "verified") {
-      return { notes: "", color: "" }; // Return an empty string for notes and color when verified
-    } else if (userInfo.status === "suspended") {
-      return { notes: "(Note: Your account has been suspended, your products can't be displayed on our website for now.)", color: "orange" };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!amount || !password) {
+      setError('Please fill in all the fields.');
+      return;
     }
-    // Fallback case for unverified status
-    return { notes: "(Note: Please verify your account to proceed.)", color: "red" };
+
+    if (parseFloat(amount) > userInfo.balance) {
+      setError('The amount entered exceeds your balance.');
+      return;
+    }
+
+    if (password !== userInfo.password) {
+      setError('The password you entered is incorrect.');
+      return;
+    }
+
+    setLoading(true);
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const { data, error } = await Supabase
+        .from("agrovest-withdrawal")
+        .insert([
+          {
+            user_id: userId,
+            fullname: userInfo.fullname,
+            amount: parseFloat(amount),
+            status: "Pending",
+            created_at: new Date(),
+          }
+        ]);
+
+      if (error) {
+        setError('Error processing your withdrawal request.');
+        console.error('Error inserting withdrawal:', error);
+      } else {
+        setAmount('');
+        setPassword('');
+        setError('');
+        alert('Withdrawal request submitted successfully. Status: Pending');
+      }
+    } catch (error) {
+      setError('Error processing your withdrawal request.');
+      console.error('Error submitting withdrawal request:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!userInfo) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
-
-  const { notes } = getNotes(); // Get status and color
-
-  const { status, color } = getVerificationStatus(); // Get status and color
-
+  const { status, color } = getUserVerificationStatus();
 
   return (
     <div className='dashb'>
-       
+      <section className='dashboard'>
+        <Sidebar name={getInitials(userInfo.fullname)} />
 
-        <section className='dashboard'>
-
-          <Sidebar name={getInitials(userInfo.fullname)}/>
-
-          <main>
-          <Header2 title='Withdrawal' status={status} statusColor={color}  notes={notes} notesColor={color} />
+        <main>
+          <Header2 title='Withdrawal' status={status} statusColor={color} notes={''} notesColor={color} />
 
           <section className='left earnings'>
             <div className="withdrawal-card">
-                <div className="w-c">
-                    <div className="w1">
-                        <h3>MasterCard</h3>
-                        <img src={circle} alt="" />
-                    </div>
-                    <h4>8763 2736 9873 0329</h4>
-
-                    <div className="w2">
-                        <div className="holder">
-                            <p>Card Holder Name</p>
-                            <h5>Jessie Joshua</h5>
-                        </div>
-
-                        <img src={symbol} alt="" />
-                    </div>
-
-                    
-
+              <div className="w-c">
+                <div className="w1">
+                  <h3>MasterCard</h3>
+                  <img src={circle} alt="" />
                 </div>
+                <h4>{userInfo.metadata?.acctNo || 'Account Number Not Available'}</h4>
 
+                <div className="w2">
+                  <div className="holder">
+                    <p>Card Holder Name</p>
+                    <h5>{userInfo.metadata?.acctName || 'Account Name Not Available'}</h5>
+                  </div>
 
+                  <img src={symbol} alt="" />
+                </div>
+              </div>
             </div>
-            
+
             <div className="withdraw-form">
+              <form onSubmit={handleSubmit}>
+                <label htmlFor="amount">
+                  <p>Enter Amount (₦)</p>
+                  <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    required
+                  />
+                </label>
 
-                        <label htmlFor="amount">
-                            <p>Enter Amount (₦)</p>
-                            <input type="text" />
-                        </label>
+                <label htmlFor="password">
+                  <p>Password</p>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </label>
 
-                        <label htmlFor="password">
-                            <p>Password</p>
-                            <input type="password" />
-                        </label>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
-                        <label htmlFor="password">
-                            <p>Verification Code</p>
-                            <div>
-                                <input type="text" />
-                                <h5>Request Code</h5>
-                            </div>
-                            
-                        </label>
-
-
-                        <label htmlFor="password" className='btn'>
-                            <button>Proceed</button>
-                        </label>
-
-                    </div>
-
+                <label htmlFor="password" className='btn'>
+                  <button type="submit" disabled={loading}>
+                    {loading ? 'Processing...' : 'Proceed'}
+                  </button>
+                </label>
+              </form>
+            </div>
           </section>
-
-          </main>
-        
-        </section>
-
-
+        </main>
+      </section>
     </div>
-  )
-}
+  );
+};
 
-export default FarmersWithdrawal
+export default FarmersWithdrawal;

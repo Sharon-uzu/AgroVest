@@ -53,6 +53,7 @@ const Product = () => {
   const [done, setDone] = useState(false); // Done state
   const [formData, setFormData] = useState({
     userid: "",
+    farmers_name: "", // Initialize fullname in formData
     productname: "",
     availability: "",
     preservative: "",
@@ -62,7 +63,9 @@ const Product = () => {
     location: "",
     image: "",
     farmerstatus: "",
+    state: "Pending"
   });
+  
   const [formErrors, setFormErrors] = useState({});
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null); // Add this ref
@@ -93,10 +96,10 @@ const Product = () => {
         setFormData((prevFormData) => ({
           ...prevFormData,
           userid: data.id,
+          farmers_name: data.fullname, // Set fullname in formData
           farmerstatus: data.status || "Not Verified",
         }));
 
-        // Fetch products after user info is set
         fetchUserProducts(data.id);
       } catch (error) {
         console.error("Error fetching user info:", error);
@@ -109,15 +112,14 @@ const Product = () => {
           .from('agrovest-products')
           .select('*')
           .eq('userid', userId);
-    
+
         if (!error) {
-          setProducts(productsData); // Refresh product list
+          setProducts(productsData);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
-    
 
     fetchUserInfo();
   }, []);
@@ -243,65 +245,49 @@ const Product = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (uploading) {
       alert('Please wait for the image to finish uploading.');
       return;
     }
-
+  
     setFormErrors(validate(formData));
-
+  
     if (Object.keys(formErrors).length === 0) {
       setLoading(true); // Start loading
       try {
-        const { error } = await Supabase.from("agrovest-products")
-          .upsert([
-            {
-              userid: formData.userid,
-              productname: formData.productname,
-              farmerstatus: formData.farmerstatus,
-              image: formData.image,
-              availability: formData.availability,
-              metadata: formData,
-            },
-          ]);
-
+        const { error } = await Supabase.from("agrovest-products").upsert([
+          {
+            userid: formData.userid,
+            farmers_name: formData.farmers_name,  // Explicitly set farmers_name here
+            productname: formData.productname,
+            farmerstatus: formData.farmerstatus,
+            image: formData.image,
+            availability: formData.availability,
+            state: formData.state,
+            metadata: formData,
+          },
+        ]);
+        
         if (error) {
           console.error('Error submitting form:', error.message);
           return;
         }
-
-        setDone(true); // Show "Done" message
-
-        // Reset form after 2 seconds
-        setTimeout(() => {
-          setFormData({
-            userid: "",
-            productname: "",
-            availability: "",
-            preservative: "",
-            description: "",
-            price: "",
-            quantity: "",
-            location: "",
-            image: "",
-            farmerstatus: "",
-          });
-
-          // Reset the file input using the ref
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
-          setDone(false); // Reset done state
-          setLoading(false); // Reset loading state
-        }, 2000);
-        window.location.reload(); 
-
+        // Other success actions
       } catch (error) {
         console.error('Error submitting form:', error.message);
       }
     }
   };
+
+  const getInitials = (fullname) => {
+    if (!fullname) return '';
+    return fullname
+      .split(' ') // Split full name by spaces into an array of words
+      .map(word => word[0].toUpperCase()) // Get the first letter of each word and convert to uppercase
+      .join(''); // Join the initials together
+  };
+  
 
   const validate = (values) => {
     const errors = {};
@@ -316,9 +302,17 @@ const Product = () => {
     return errors;
   };
 
+  // if (!userInfo) {
+  //   return <div>Loading...</div>;
+  // }
+
   if (!userInfo) {
-    return <div>Loading...</div>;
-  }
+    return (
+        <div className="loader-container">
+            <div className="spinner"></div>
+        </div>
+    );
+}
 
 
 
@@ -392,7 +386,7 @@ const Product = () => {
   return (
     <div className='dashb'>
       <section className='dashboard'>
-        <Sidebar name={userInfo.fullname} />
+        <Sidebar name={getInitials(userInfo.fullname)} />
         <main>
         <Header2 title='Products' status={status} statusColor={color} />
           <section className='left prod'>
@@ -406,20 +400,26 @@ const Product = () => {
               
               {products.length > 0 ? (
                 displayedProducts.map((product) => {
-                  const imageUrl = product.metadata.image 
+                  const imageUrl = product.metadata.image
                     ? `https://wgfidvtzcblzcnstkyae.supabase.co/storage/v1/object/public/agrovest-product-images/${product.metadata.image}`
                     : 'default-image-url'; // Fallback if no image
-
+                
+                  const statusColor = 
+                    product.state === "Approved" ? "green" :
+                    product.state === "Rejected" ? "red" : 
+                    "orange"; // Pending
+                
                   return (
                     <div className="prod1" key={product.id}>
                       <img src={imageUrl} alt={product.productname} />
                       <div className="txt">
-                        <h4>{product.productname}  <p>₦{product.metadata?.price}</p></h4>
-                        
+                        <p style={{ color: statusColor }}>{product.state}</p>
+                        <h4>{product.productname}  <p>₦{product.metadata?.price}</p></h4>                     
                         <h6 style={{ color: product.metadata.availability === "Out-of-stock" ? 'red' : 'green' }}>
                           {product.metadata.availability}
 
                           <span onClick={() => toggleModal1(product)}>Edit</span>
+                          
                         </h6>
                       </div>
                     </div>
@@ -458,9 +458,9 @@ const Product = () => {
                 </div>
                 <div className='n-input'>
                   <input
-                    type="text"
+                    type="number"
                     name='price'
-                    placeholder='Price per unit'
+                    placeholder='Price per unit(₦) e.g 200'
                     value={formData.price}
                     onChange={handleChange}
                   />
@@ -470,7 +470,7 @@ const Product = () => {
                   <input
                     type="text"
                     name='quantity'
-                    placeholder='Quantity'
+                    placeholder='Quantity e.g 2 bags'
                     value={formData.quantity}
                     onChange={handleChange}
                   />
