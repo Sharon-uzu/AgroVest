@@ -112,7 +112,7 @@ const UnapproveProduct = () => {
       <section className='dashboard'>
         <AdminSidebar />
         <main>
-          <Header2 title='Manage Product Approvals' />
+          <Header2 title='Product Approvals'/>
 
           <section className='left prod'>
             <div className="tabb">

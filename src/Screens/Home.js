@@ -87,7 +87,7 @@ const Home = () => {
                             <li><Link to='/' onClick={closeMenuBar}>Home</Link></li>
                             <li><a href='#service' onClick={closeMenuBar}>Service</a></li>
                             <li><a href='#about' onClick={closeMenuBar}>About Us</a></li>
-                            <li><Link to='/agrofarm' onClick={closeMenuBar}>AgroFarm</Link></li>
+                            <li><Link to='/all-products' onClick={closeMenuBar}>Products</Link></li>
                             <li><Link to='/contact' onClick={closeMenuBar}>Contact Us</Link></li>
                             {loggedIn ? (
                                 <li className='dp' onClick={toggleModal}>

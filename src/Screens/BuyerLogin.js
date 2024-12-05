@@ -14,6 +14,7 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
 
     const [formData, setFormData] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false); // New state for loading
 
     const validate = (values) => {
         const errors = {};
@@ -39,6 +40,8 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
         setFormErrors(errors);
       
         if (Object.keys(errors).length > 0) return;
+
+        setIsLoading(true); // Set loading state to true
       
         try {
           const { data, error } = await Supabase
@@ -50,6 +53,7 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
       
           if (error || !data) {
             alert("Incorrect login details or user not found");
+            setIsLoading(false); // Reset loading state
             return;
           }
       
@@ -71,9 +75,10 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
           navigate("/");
         } catch (error) {
           alert("Error during login");
+        } finally {
+          setIsLoading(false); // Reset loading state
         }
       };
-      
 
     return (
         <div>
@@ -110,7 +115,13 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
                                 </label>
 
                                 <div className="sign-btn">
-                                    <button type="submit" onClick={handleSubmit}>Login</button>
+                                    <button
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                        disabled={isLoading} // Disable button while loading
+                                    >
+                                        {isLoading ? "Loading..." : "Login"} {/* Update button text */}
+                                    </button>
                                 </div>
                                 <span>Don't have an account? <Link to="/buyerSignup">Sign Up</Link></span>
 
@@ -121,6 +132,6 @@ const BuyerLogin = ({ setLoggedIn, setUserDetails }) => {
             </section>
         </div>
     );
-}
+};
 
 export default BuyerLogin;

@@ -5,7 +5,7 @@ import { MdOutlineReceipt } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaCube } from "react-icons/fa";
-import { FaBars} from "react-icons/fa";
+import { HiMiniBars3BottomRight } from "react-icons/hi2";
 import { RiCloseFill} from "react-icons/ri";
 import logo from '../Images/logo.png';
 // import logo2 from '../Assets/logo2.png'
@@ -67,7 +67,7 @@ const Sidebar = (props) => {
       
     
       
-      <FaBars className='media-bar'  onClick={() =>{setOpen1(!open1)}} style={{cursor:'pointer'}}/>
+      <HiMiniBars3BottomRight className='media-bar'  onClick={() =>{setOpen1(!open1)}} style={{cursor:'pointer'}}/>
       
 
       <div className='side side-bg' style={{width:isOpen ? "70px" : "250px"}}>
@@ -94,7 +94,7 @@ const Sidebar = (props) => {
 
             
                 
-                <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
+                {/* <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
                     
@@ -103,10 +103,10 @@ const Sidebar = (props) => {
 
                     </div>
                 
-                </NavLink>
+                </NavLink> */}
 
 
-                <NavLink to='/product' className='link links' activeclassName = 'active'>
+                <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
                     
@@ -179,7 +179,7 @@ const Sidebar = (props) => {
 
 
 
-            <NavLink to='/farmerlogin' className='link logout links' activeclassName = 'active'>
+            <NavLink to='/login' className='link logout links' activeclassName = 'active'>
                 
                     
                     
@@ -201,7 +201,7 @@ const Sidebar = (props) => {
 
     {
         open1 ?
-    <div className='side side-sm' style={{width:open1 ? "270px" : "70px"}}>
+    <div className='side side-sm' style={{width:open1 ? "230px" : "70px"}}>
         <RiCloseFill className='close-bar'  onClick={() =>{setOpen1(!open1)}} style={{cursor:'pointer'}}/>
 
 
@@ -213,8 +213,8 @@ const Sidebar = (props) => {
                 <div className='bar' >
 
                     
-                    <div className='logo-div' style={{display:isOpen ? "none" : "block"}}>
-                        <Link to='/' style={{textDecoration:'none'}}><h1>Agro<span>Vest</span></h1></Link>
+                <div className='logo-div' style={{display:isOpen ? "none" : "block"}}>
+                        <Link to='/' style={{textDecoration:'none',textAlign:'center'}}><h1>{props.name}<span></span></h1></Link>
                     </div>
 
                     {/* <div className='logo-div' style={{display:isOpen ? "block" : "none"}}>
@@ -227,7 +227,7 @@ const Sidebar = (props) => {
 
             
                 
-                <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
+                {/* <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
                     
@@ -236,10 +236,10 @@ const Sidebar = (props) => {
 
                     </div>
                 
-                </NavLink>
+                </NavLink> */}
 
 
-                <NavLink to='/product' className='link links' activeclassName = 'active'>
+                <NavLink to='/dashboard' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
                     
@@ -277,6 +277,18 @@ const Sidebar = (props) => {
                 </NavLink>
 
 
+                <NavLink to='/farmerswithdrawalhistory' className='link links' activeclassName = 'active'>
+                
+                    <div className='one'>
+                    
+                        <GiReceiveMoney className='icon'/>
+                        <h4 style={{display:isOpen ? "none" : "block"}}>Withdrawal History</h4>
+
+                    </div>
+                
+                </NavLink>
+
+
                 <NavLink to='/settings' className='link links' activeclassName = 'active'>
                 
                     <div className='one'>
@@ -288,16 +300,7 @@ const Sidebar = (props) => {
                 
                 </NavLink>
 
-                <NavLink to='/contact' className='link links' activeclassName = 'active'>
                 
-                    <div className='one'>
-                    
-                        <FaRegCircleQuestion className='icon'/>
-                        <h4 style={{display:isOpen ? "none" : "block"}}>Help</h4>
-
-                    </div>
-                
-                </NavLink>
 
 
         
@@ -309,20 +312,19 @@ const Sidebar = (props) => {
 
 
 
-            <NavLink to='/farmerlogin' className='link logout links' activeclassName = 'active'>
+            <NavLink to='/login' className='link logout links' activeclassName = 'active'>
                 
                     
                     
                 <RiLogoutBoxRLine className='icon'/>
-                <h4 style={{display:isOpen ? "none" : "block"}}>Logout</h4>
+                <h4 style={{display:isOpen ? "none" : "block"}}>LogOut</h4>
 
                 
-                </NavLink>
-
-        </section>
+            </NavLink>
 
 
         </section>
+    </section>
             
     </div> 
     : null

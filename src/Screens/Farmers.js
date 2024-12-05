@@ -161,7 +161,7 @@ const Farmers = () => {
                     <tr style={{cursor:'pointer'}} key={person.id}>
                         <td>{person.fullname}</td>
                         <td>{person.email}</td>
-                        <td className='dt' onClick={() => openModal(person)}><button>See Details</button></td>
+                        <td className='dt' onClick={() => openModal(person)}><button>Details</button></td>
                         <td className='dt' onClick={() => handleDecline(person.id)}><button>Suspend</button></td>
                     </tr>
 

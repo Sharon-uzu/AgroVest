@@ -296,7 +296,7 @@ const Overview = (props) => {
             right: 0,
             bottom: 0,
             zIndex: 1200000000000,
-            backgroundColor: "hsl(0, 0%, 0%, .6)",
+            backgroundColor: "hsl(0, 0%, 0%, .7)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -310,7 +310,7 @@ const Overview = (props) => {
             </div>
             <div className="checkout">
               <div className="check">
-                <h2>Payment Method</h2>
+                <h2>Payment</h2>
                 <div className='formm'>
                   <select name="paymentMethod" onChange={handleChange}>
                     <option value="debit">Debit card</option>

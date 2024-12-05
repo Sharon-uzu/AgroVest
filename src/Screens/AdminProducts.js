@@ -140,8 +140,8 @@ return (
 
             <table>
               <tr className='heading'>
-                <th>Farm Name</th>
-                <th>Email</th>
+                <th>Product</th>
+                <th>Price</th>
                 <th className='dt'></th>
                 <th className='dt'></th>
               </tr>
@@ -150,8 +150,8 @@ return (
               {approvedProduct.map((product) => (
                   <tr style={{cursor:'pointer'}} key={product.id}>
                       <td>{product.productname}</td>
-                      <td>{product.price}</td>
-                      <td className='dt' onClick={() => openModal(product)}><button>See Details</button></td>
+                      <td>{product.metadata.price}</td>
+                      <td className='dt' onClick={() => openModal(product)}><button>Details</button></td>
                       <td className='dt' onClick={() => handleDecline(product.id)}><button>Suspend</button></td>
                   </tr>
 

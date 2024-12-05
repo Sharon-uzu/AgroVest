@@ -141,7 +141,7 @@ const AdminWithdrawal = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>Farmer Name</th>
+                      <th>Farmer</th>
                       <th>Date</th>
                       <th>Amount</th>
                       <th>Status</th>

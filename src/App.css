@@ -27,6 +27,11 @@ body{
 }
 
 /* Spinning Loader */
+.f-spinner{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .spinner {
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #FD721B; /* Blue color */
@@ -52,7 +57,7 @@ header{
 }
 
 header nav{
-  width: 90%;
+  width: 92%;
   margin: auto;
   height: 100%;
   margin: auto;
@@ -296,7 +301,7 @@ header nav ul .first-list .drop::before{
 }
 
 .hero .h-c{
-  width: 80%;
+  width: 90%;
   height: 80%;
   margin: auto;
   display: flex;
@@ -456,13 +461,12 @@ header nav ul .first-list .drop::before{
 .features{
   width: 100%;
   padding: 35px 0;
-  background-color: #006738;
+  background-color: #056838;
 }
 
 .features .f-arr{
   width: 90%;
   margin: auto;
-  margin-bottom: 36px;
 }
 .features .f-arr .arr-i{
   font-size: 20px;
@@ -470,15 +474,20 @@ header nav ul .first-list .drop::before{
 }
 
 .features .feature{
+  width: 100%;
+}
+.features .feature .f-s{
   width: 90%;
   margin: auto;
 }
-
 .features .feature .search{
+  width: 70%;
+  margin-left: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
+  padding: 30px 0;
 }
 
 .features .feature .search .filter{
@@ -523,7 +532,7 @@ header nav ul .first-list .drop::before{
   width: 20%;
   border: 1px solid #A6A6A6;
   border-radius: 10px;
-  height: 50px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -538,56 +547,78 @@ header nav ul .first-list .drop::before{
 .features .feature .search .inp input{
   background: transparent;
   border: none;
+  outline: none;
+  color: #fff;
 }
 
 .features .feature .search .inp input::placeholder{
   color: #fff;
 }
-
-.features .feature .fc{
+.features .feature .feat-c{
   width: 100%;
+  background-color: #fff;
+  padding: 40px 0;
+}
+.features .feature .fc{
+  width: 85%;
+  margin: auto;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .features .feature .fc .fc-c{
-  width: 23.5%;
+  border: 5px solid #056838;
+  width: 30%;
   background-color: #fff;
   border-radius: 20px 20px 0 0;
-  padding-bottom: 10px;
+  padding: 18px 0;
   margin-top: 20px;
+  text-align: center;
+  position: relative;
 }
 
 .features .feature .fc .fc-c img{
-  width: 100%;
-  height: 330px;
-  border-radius:10px 10px 0 0;
+  width: 200px;
+  height: 200px;
+  border-radius:50%;
+  margin: auto;
   margin-bottom: 15px;
+  object-fit: cover;
 }
 
 .features .feature .fc .fc-c .name-rate{
-  width: 95%;
+  width: 93%;
   margin: auto;
   display: flex;
   justify-content: space-between;
+  align-items: end;
+  text-align: start;
 }
 .features .feature .fc .fc-c .name-rate .name{
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   line-height: 30px;
+  margin: 0;
+  text-transform: capitalize;
+  color: #056838;
 }
-
-.features .feature .fc .fc-c .name-rate .rate{
-  margin-bottom: 15px;
+.features .feature p{
+  margin:0;
+}
+.features .feature .p-hrt{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #FD721B;
+  font-size: 18px;
 }
 
 .features .feature .fc .fc-c .name-rate .rate .star{
-  width: 12.41px;
-  height: 11.72px;
+  width: 15px;
   color: #FD721B;
-  margin-right: 2px;
-  
+  margin-right: 2px
 } 
 
 .features .feature .fc .fc-c .price-react{
@@ -598,10 +629,9 @@ header nav ul .first-list .drop::before{
   margin-bottom: 15px;
 }
 
-.features .feature .fc .fc-c .price-react .price{
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 22.5px;  
+.features .feature .fc .fc-c .name-rate .price{
+  color: #49454F;
+  font-size: 16px;
 }
 
 .features .feature .fc .fc-c .price-react .r-i{
@@ -611,39 +641,57 @@ header nav ul .first-list .drop::before{
 }
 
 .features .feature .fc .fc-c .btns{
-  width: 95%;
-  margin: auto;
+  width: fit-content;
+ 
 }
 
 .features .feature .fc .fc-c .btns a{
-  width: 100%;
+  width: fit-content;
 }
 
 .features .feature .fc .fc-c button{
   border: none;
   background-color: #FD721B;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   border-radius: 10px;
   color:#fff;
-  height: 45px;
-  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  width: fit-content;
 }
 
 .features .feature .fc .see{
   width: 100%;
-  text-align: center;
+  display: flex;
+  justify-content: end;
   margin-top: 25px;
 }
 
+.features .feature .fc .see a{
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  color: #3B713D;
+  text-decoration: none;
+
+}
 .features .feature .fc .see a button{
-  width: 18%;
+  width: fit-content;
   background-color: transparent;
-  color: #FD721B;
   height: 45px;
   border-radius: 10px ;
-  border: 1px solid #FD721B;
+  border: none;
+  margin-left: 3px;
+  color: #3B713D;
+}
 
+.features .feature .fc .see a:hover{
+  color: #FD721B;
+}
+
+.features .feature .fc .see a:hover button{
+  color: #FD721B;
 }
 
 /* Connect */
@@ -665,7 +713,7 @@ header nav ul .first-list .drop::before{
 .connect .connect-c .connect-text{
   width: 90%;
   height: 85%;
-  
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -676,20 +724,21 @@ header nav ul .first-list .drop::before{
   color: #fff;
   font-size: 70px;
   font-weight: 700;
-  line-height: 105px;
+  line-height: 95px;
 
 }
 
 .connect .connect-c .connect-text .more{
   display: flex;
   align-items: center;
-  margin-top: 70px;
+  margin-top: 50px;
+  text-align: center;
+  justify-content: center;
 }
 
 .connect .connect-c .connect-text .more a button{
   height: 55px;
   padding: 0 20px;
-  margin-right: 20px;
   border-radius: 10px;
   background: #FD721B;
   color: #fff;
@@ -701,8 +750,14 @@ header nav ul .first-list .drop::before{
 }
 
 .connect .connect-c .connect-text .more a .btn2{
+  width: fit-content;
+  margin: auto;
   background-color: transparent;
   color: #FD721B;
+}
+.connect .connect-c .connect-text .more a .btn2:hover{
+  color: #fff;
+  background-color: #FD721B;
 }
 
 /* Footer */
@@ -811,6 +866,7 @@ header nav ul .first-list .drop::before{
   width:100%;
   text-align: center;
   margin: 40px 0;
+  text-transform: capitalize;
 }
 
 .overview .img{
@@ -834,19 +890,20 @@ header nav ul .first-list .drop::before{
 
 .overview .overview-c p{
   font-size: 20px;
-  font-weight: 600;
-
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 .overview .overview-c p span{
   font-size: 18px;
   font-weight: 400;
   margin-left: 3px;
-
+  text-transform: capitalize;
+  color: #49454F;
 }
 
 .overview .overview-c h4{
-  font-weight: 700;
+  font-weight: 500;
   font-size: 23px;
   margin-top: 20px;
 }
@@ -869,7 +926,7 @@ header nav ul .first-list .drop::before{
 
 .overview .overview-c .quan-price .quan h5{
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 36px;
 }
 
@@ -1126,13 +1183,14 @@ header nav ul .first-list .drop::before{
   border: none;
   height: 40px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .sign-up .s-r .sign .form .form-c span{
   font-size: 15px;
   font-weight: 400;
-  margin-top: 15px;
   text-align: center;
+  margin-top: 3px;
 }
 
 .sign-up .s-r .sign .form .form-c span a{
@@ -1141,7 +1199,7 @@ header nav ul .first-list .drop::before{
 
 /* Checkout */
 .bill{
-  background: conic-gradient(from 137.55deg at 50% 50%, #9B8145 -7.95deg, #2B6E3C 9.02deg, #FF924E 9.29deg, #36703D 26.53deg, #8E8044 28.08deg, #CA8949 42.29deg, #056838 58.85deg, rgba(255, 146, 78, 0.6) 79.54deg, #647841 86.15deg, #37703D 91.46deg, #9B8145 100.06deg, #807D43 179.86deg, #777B42 200.24deg, #5C7740 223.78deg, #3B713D 296.81deg, #BC8248 315.09deg, #9B8145 352.05deg, #2B6E3C 369.02deg);
+  /* background: conic-gradient(from 137.55deg at 50% 50%, #9B8145 -7.95deg, #2B6E3C 9.02deg, #FF924E 9.29deg, #36703D 26.53deg, #8E8044 28.08deg, #CA8949 42.29deg, #056838 58.85deg, rgba(255, 146, 78, 0.6) 79.54deg, #647841 86.15deg, #37703D 91.46deg, #9B8145 100.06deg, #807D43 179.86deg, #777B42 200.24deg, #5C7740 223.78deg, #3B713D 296.81deg, #BC8248 315.09deg, #9B8145 352.05deg, #2B6E3C 369.02deg); */
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
@@ -1150,7 +1208,7 @@ header nav ul .first-list .drop::before{
   width: 50%;
   margin: auto;
   background-color: #fff;
-  padding: 30px 0;
+  padding: 25px 0;
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -1158,7 +1216,7 @@ header nav ul .first-list .drop::before{
 .checkout-section .close-check{
   width: 90%;
   margin: auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .checkout-section .close-check button{
@@ -1197,7 +1255,7 @@ header nav ul .first-list .drop::before{
 
 .checkout-section .checkout .check .formm input{
   width: 100%;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   border: 1px solid #49454F;
   border-radius: 7px;
   height: 50px;
@@ -1230,7 +1288,7 @@ header nav ul .first-list .drop::before{
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .checkout-section .checkout .check .formm div h4{
@@ -1366,6 +1424,10 @@ header nav ul .first-list .drop::before{
 .header2 .h2 h1{
   font-size: 30px;
   color: #000;
+  margin: 0;
+}
+.header2 .h2 p{
+  margin: 0;
 }
 
 .header2 .h2 ul .h2-i{
@@ -1375,7 +1437,7 @@ header nav ul .first-list .drop::before{
 }
 
 .header2 .h2 p{
-  font-size: 22px;
+  font-size: 20px;
 }
 
 
@@ -1555,7 +1617,7 @@ header nav ul .first-list .drop::before{
 }
 
 .logo-div h1{
-  font-size: 40px;
+  font-size: 32px;
   color: #fff;
   font-weight: 700;
 }
@@ -1605,7 +1667,7 @@ header nav ul .first-list .drop::before{
   justify-content: center;
   align-items: center;
   transition: all .5s ease-in;
-  margin-top: 20px;
+  margin-top: 17px;
 }
 
 .side .one{
@@ -1848,22 +1910,37 @@ header nav ul .first-list .drop::before{
   border: 1px solid #000;
   border-radius: 15px 15px 0 0;
   margin-bottom: 40px;
+  text-align: center;
+  padding: 14px 0;
 }
 
 .prod .products .prod1 img{
-  width: 100%;
-  height: 250px;
+  width: 190px;
+  margin: auto;
+  height: 190px;
+  border-radius: 50%;
   object-fit: cover;
-  border-radius: 15px 15px 0 0;
 }
 
 .prod .products .prod1 .txt{
   width: 93%;
   margin: auto;
   margin-top: 20px;
-  padding-bottom: 15px;
+}
+.prod .products .prod1 .txt .del{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.prod .products .prod1 .txt .del p{
+  margin: 0;
+}
+.prod .products .prod1 .txt .del span{
+  color: red;
 }
 .prod .products .prod1 .txt h4{
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1875,14 +1952,14 @@ header nav ul .first-list .drop::before{
   color: #4F4F4F;
 }
 .prod .products .prod1 .txt h6{
-  font-size: 20px;
-  margin-top: 7px;
+  font-size: 16px;
+  /* margin-top: 7px; */
   color: #006738;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.prod .products .prod1 .txt h6 span{
+.prod .products .prod1 .txt span{
   cursor: pointer;
   color: #4F4F4F;
   font-size: 16px;
@@ -2126,6 +2203,9 @@ header nav ul .first-list .drop::before{
   line-height: 22.5px;
 
 }
+.dashb .dashboard main .earnings .history th:nth-child(1){
+  width: 15%;
+}
 
 
 .dashb .dashboard main .earnings .history table tr th:nth-child(2){
@@ -2142,6 +2222,9 @@ header nav ul .first-list .drop::before{
   letter-spacing: 0.01em;
   text-align: left;
 
+}
+.dashb .dashboard main .earnings .history table tr td:nth-child(1){
+  width: 15%;
 }
 
 .dashb .dashboard main .earnings .history table tr td:nth-child(2){
@@ -2555,7 +2638,7 @@ header nav ul .first-list .drop::before{
 
 .modal1 .modal1-content .product-info p{
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 .modal1 .modal1-content .product-info p span{
@@ -2643,8 +2726,8 @@ header nav ul .first-list .drop::before{
 @media screen and (max-width:1000px){
  
   .overview .img{
-    width: 60%;
-    height: 400px;
+    width: 100%;
+    height: 200px;
     text-align: center;
     margin-bottom: 15px;
   }
@@ -2685,6 +2768,13 @@ header nav ul .first-list .drop::before{
   .dp-modal{
     width: 60%;
   }
+  .features .feature .search{
+    width: 100%;
+    margin: auto;
+  }
+  .features .feature .search h3{
+    margin: 0;
+  }
 
 }
 
@@ -2724,7 +2814,7 @@ header nav ul .first-list .drop::before{
 
   .bars{
     display: block;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 600;
   }
 
@@ -2780,7 +2870,6 @@ header nav ul .first-list .drop::before{
   }
   .footer .footer-c .foot1{
     width: 100%;
-    margin-bottom: 20px;
   }
   .footer .footer-c .foot2{
     width: 28%;
@@ -2803,15 +2892,18 @@ header nav ul .first-list .drop::before{
   .media-bar{
     display: block;
     position: absolute;
-    top: 35px;
-    left: 3%;
+    top: 18px;
+    right: 5%;
+  }
+  .admin-bar{
+    top: 55px;
   }
 
   .close-bar{
     display: block;
     position: absolute;
     top: 11px;
-    left: 5%;
+    right: 5%;
     color: #fff;
     font-size: 26px;
     font-weight: 700;
@@ -2821,7 +2913,21 @@ header nav ul .first-list .drop::before{
   .withdraw-form label div h5{
     font-size: 12px;
   }
-
+  .header2 .h2 p {
+    font-size: 16px;
+  }
+  .header2 .h2{
+    width: 100%;
+  }
+  .dashb .dashboard main .earnings{
+    width: 100%;
+  }
+  .dashb .dashboard main .left h2{
+    width: 100%;
+  }
+  .prod .products{
+    width: 100%;
+  }
 }
 
 @media screen and (max-width:700px){
@@ -2840,16 +2946,7 @@ header nav ul .first-list .drop::before{
   .abt .abt-r{
     width: 100%;
   }
-  .features .feature .search{
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 15px;
-  }
-
-  .features .feature .search .inp{
-    width: 70%;
-    justify-content: start;
-  }
+ 
   .features .feature .search h3{
     margin: 0;
   }
@@ -2879,7 +2976,7 @@ header nav ul .first-list .drop::before{
     width: 100%;
   }
   .withdrawal-card .w-c .w1 h3{
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .withdrawal-card .w-c h4{
@@ -2887,7 +2984,7 @@ header nav ul .first-list .drop::before{
   }
 
   .withdrawal-card .w-c .w2 p{
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .dashb .dashboard main .earnings .history .tb{
@@ -2949,6 +3046,37 @@ header nav ul .first-list .drop::before{
     width: 600px;
   }
 
+  .features .feature .search h3{
+    font-size: 20px;
+  }
+  .contact .contact-c{
+    padding: 20px 0;
+  }
+  .contact .contact-c form{
+    padding: 10px 0;
+  }
+  .contact .contact-c form .form-c input{
+    padding-top: 10px;
+    height: 45px;
+  }
+  .contact-us .arr{
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  .contact{
+    height: auto;
+    margin-top: 15px;
+  }
+  .contact .contact-c form .form-c .subm button{
+    font-size: 16px;
+    height: 40px;
+  }
+  .connect .connect-c .connect-text .more{
+    margin-top: 30px;
+  }
+  .connect .connect-c{
+    align-items: center;
+  }
 
 }
 
@@ -2969,13 +3097,25 @@ header nav ul .first-list .drop::before{
     width: 48%;
     margin-bottom: 10px;
   }
+  .connect .connect-c .connect-text .more{
+    margin-top: 20px;
+  }
+  .withdrawal-card .w-c .w2 h5{
+    font-size: 18px;
+  }
+  .with-history tr th{
+    font-size: 16px;
+  }
+  .with-history tr td{
+    font-size: 15px;
+  }
 
 
 }
 
 @media screen and (max-width:500px){
   .dp-modal{
-    width: 90%;
+    width: 100%;
   }
   header nav .logo img {
     width: 80%;
@@ -2984,30 +3124,32 @@ header nav ul .first-list .drop::before{
   height: 550px;
  }
   .hero .h-c{
-    width: 95%;
+    width: 89%;
   }
   .hero .h-c h3{
     font-size: 28px;
   }
-  .features .feature .search{
-    flex-direction: column-reverse;
-    align-items: start;
-  }
-  .features .feature .search .inp{
-    width: 100%;
-  }
+  
+  
   .features .feature .search .filter{
     margin-top: 15px;
   }
 
+  .connect .connect-c{
+    height: 400px;
+  }
+
   .connect .connect-c .connect-text h2{
-    font-size: 40px;
+    font-size: 30px;
+    line-height: 60px;
   }
 
   .footer .footer-c .foot2{
     width: 100%;
   }
-
+  .overview h2{
+    font-size: 24px;
+  }
   .overview .overview-c p{
     font-size: 17px;
   }
@@ -3042,6 +3184,13 @@ header nav ul .first-list .drop::before{
   .checkout-section .checkout .out .content p{
     font-size: 15px;
   }
+  .features .feature .search{
+    flex-direction: column;
+    align-items: start;
+  }
+  .features .feature .search .inp{
+    margin-top: 25px;
+  }
 
   /* Dashboard */
 
@@ -3061,11 +3210,26 @@ header nav ul .first-list .drop::before{
   .settings-form label{
     width: 100%;
   }
+  .header2 .h2 h1{
+    font-size: 22px;
+  }
+  .logo-div h1{
+    font-size: 26px;
+  }
+  .dashb .dashboard .tabb table tr th{
+    font-size: 16px;
+  }
+  .dashb .dashboard .tabb table tr td{
+    font-size: 15px;
+  }
 
 }
 
 
 @media screen and (max-width:400px){
+  header nav ul li a{
+    font-size:17px ;
+  }
 
   .h-modal .content-m .history{
     width: 100%;
@@ -3083,10 +3247,48 @@ header nav ul .first-list .drop::before{
   }
 
   .header2 .h2 h1{
-    font-size: 22px;
-    margin-left: 4px;
+    font-size: 20px;
   }
-
+  .abt .abt-r h3{
+    font-size: 23px;
+  }
+  .abt .abt-r h5{
+    font-size: 20px;
+  }
+  .abt .abt-r p{
+    font-size: 17px;
+  }
+  .serv h3{
+    font-size: 24px;
+  }
+  .serv .s-c .s1 h4{
+    font-size: 19px;
+  }
+  .faqs h1{
+    font-size: 24px;
+  }
+  .faqs .w-r .ques div h4{
+    font-size: 17px;
+  }
+  .footer .footer-c .foot1 p{
+    font-size: 16px;
+    width: 100%;
+  }
+  .footer .footer-c .foot2{
+    margin-top: 10px;
+  }
+  .footer .footer-c .foot2 h3{
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+  .footer .footer-c .foot2 li{
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+  .connect .connect-c .connect-text h2{
+    line-height: 45px;
+    font-size: 26px;
+  }
   /* dashboard */
 
   .prod .products .prod1 {
@@ -3136,6 +3338,9 @@ header nav ul .first-list .drop::before{
   /* dashboard */
   .prod .products .prod1 .txt h6{
     font-size: 18px;
+  }
+  .side div h4{
+    font-size: 14px;
   }
 
 

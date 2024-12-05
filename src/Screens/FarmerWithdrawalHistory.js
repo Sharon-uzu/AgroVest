@@ -96,7 +96,7 @@ const FarmerWithdrawalHistory = () => {
         <Sidebar name={getInitials(userInfo.fullname)} />
 
         <main>
-          <Header2 title='Withdrawal History' status={status} statusColor={color} notes={notes} notesColor={color} />
+          <Header2 title='History' status={status} statusColor={color} notes={notes} notesColor={color} />
 
           <section className='left'>
             <div className="with-history">

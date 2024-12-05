@@ -21,13 +21,13 @@ const Footer = () => {
 
             <div className="foot2">
                 <h3>About</h3>
-                <li><a href="">About Us</a></li>
-                <li><a href="">News</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#service">Service</a></li>
             </div>
 
             <div className="foot2">
                 <h3>Company</h3>
-                <li><a href="">FAQs</a></li>
+                <li><a href="#faq">FAQs</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Partner with us</a></li>
             </div>

@@ -3,23 +3,26 @@ import { MdFilterList } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { Supabase } from "../config/supabase-config"; // Import Supabase
+import { IoIosStar } from "react-icons/io";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import { IoIosHeart } from "react-icons/io";
 
 const Feature = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
-  // Fetch 8 In-stock products from agrovest-products table
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const { data, error } = await Supabase
-          .from('agrovest-products') // Table name
+          .from('agrovest-products')
           .select('*')
-          .eq('availability', 'In-stock') // Filter for availability
-            .eq('farmerstatus', 'verified') // Filter for farmerstatus
-            .eq('state', 'Approved')  // Filter for availability
-          .limit(4); // Limit to 8 products
+          .eq('availability', 'In-stock')
+          .eq('farmerstatus', 'verified')
+          .eq('state', 'Approved')
+          .limit(8);
 
         if (error) {
           setError(error.message);
@@ -38,8 +41,17 @@ const Feature = () => {
     fetchProducts();
   }, []);
 
+  const filteredProducts = products.filter(item =>
+    item.productname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='f-spinner' style={{ textAlign: 'center' }}>
+        <div className="spinner"></div>
+        {/* <p>Loading...</p> */}
+      </div>
+    );
   }
 
   if (error) {
@@ -49,45 +61,59 @@ const Feature = () => {
   return (
     <div className='features'>
       <div className='feature'>
-        <div className='search'>
-          <span className='filter'>
-            <MdFilterList className='fil' />
-            Filter by
-          </span>
-
-          <h3>Our Feature Products</h3>
-
-          <div className='inp'>
-            <CiSearch className='s-i' />
-            <input type="search" placeholder='Search product' />
+        <div className="f-s">
+          <div className='search'>
+            <h3>Our Feature Products</h3>
+            <div className='inp'>
+              <CiSearch className='s-i' />
+              <input
+                type="search"
+                placeholder='Search product'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
-        <section className='fc'>
-          {products && products.map(item => (
-            <div className='fc-c' key={item.id}>
-              <img src={`https://wgfidvtzcblzcnstkyae.supabase.co/storage/v1/object/public/agrovest-product-images/${item.image}`} alt={item.image} /> {/* Use dynamic image_url */}
-              <div>
-                <div className='name-rate' style={{ marginBottom: '15px' }}>
-                  <span className='name'>{item.productname}</span>
-                  <span className='price'>₦{item.metadata.price}</span>
+        <div className="feat-c">
+          <section className='fc'>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map(item => (
+                <div className='fc-c' key={item.id}>
+                  <img src={`https://wgfidvtzcblzcnstkyae.supabase.co/storage/v1/object/public/agrovest-product-images/${item.image}`} alt={item.image} />
+                  <div>
+                    <IoIosHeart className='p-hrt'/>
+                    <div className='name-rate'>
+                      <div>
+                        <p className='name'>{item.productname}</p>
+                        <p className='price name'>₦{item.metadata.price}</p>
+                        <div className="rate">
+                          <IoIosStar className='star'/>
+                          <IoIosStar className='star'/>
+                          <IoIosStar className='star'/>
+                          <IoIosStar className='star'/>
+                        </div>
+                      </div>
+                      <div className='btns'>
+                        <Link to={`/overview/${item.id}`}> <button>See Details</button></Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <p style={{ textAlign: 'center' }}>No products match your search.</p>
+            )}
 
-                <div className='btns'>
-                  <Link to={`/overview/${item.id}`}><button>See Details</button></Link>
-                </div>
-              </div>
+            <div className='see'>
+              <Link to='/all-products'><FaLongArrowAltRight className='see-arr'/><button>See All</button></Link>
             </div>
-          ))}
-
-          <div className='see'>
-            <Link to='/all-products'><button>See All</button></Link>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Feature;
-

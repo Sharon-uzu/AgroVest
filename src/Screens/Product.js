@@ -259,7 +259,7 @@ const Product = () => {
         const { error } = await Supabase.from("agrovest-products").upsert([
           {
             userid: formData.userid,
-            farmers_name: formData.farmers_name,  // Explicitly set farmers_name here
+            farmers_name: formData.farmers_name, // Explicitly set farmers_name here
             productname: formData.productname,
             farmerstatus: formData.farmerstatus,
             image: formData.image,
@@ -268,17 +268,57 @@ const Product = () => {
             metadata: formData,
           },
         ]);
-        
+  
         if (error) {
           console.error('Error submitting form:', error.message);
+          alert('Failed to upload product. Please try again.');
+          setLoading(false); // Reset loading
           return;
         }
-        // Other success actions
+  
+        // Simulate a short delay for user experience
+        setTimeout(() => {
+          setLoading(false); // End loading
+          setDone(true); // Show done state
+  
+          setTimeout(() => {
+            alert("Product uploaded successfully!"); // Show alert
+            window.location.reload(); // Refresh the page
+          }, 1000); // Delay for user to see "Done" state
+        }, 1000);
       } catch (error) {
         console.error('Error submitting form:', error.message);
+        alert('An unexpected error occurred. Please try again.');
+        setLoading(false); // Reset loading
       }
     }
   };
+  
+
+  const handleDeleteProduct = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        const { error } = await Supabase
+          .from("agrovest-products")
+          .delete()
+          .eq("id", productId);
+  
+        if (error) {
+          console.error("Error deleting product:", error);
+          alert("Failed to delete product. Please try again.");
+          return;
+        }
+  
+        alert("Product deleted successfully.");
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.id !== productId)
+        ); // Update the products state to remove the deleted product
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    }
+  };
+  
 
   const getInitials = (fullname) => {
     if (!fullname) return '';
@@ -374,7 +414,7 @@ const Product = () => {
             <Header2 title='Products' status={status} statusColor={color} />
             <section className='left prod'>
               <h2>Your account is not verified</h2>
-              <p>Please verify your account before uploading products.</p>
+              <p>Please go to the settings page and verify your account before uploading products.</p>
             </section>
           </main>
         </section>
@@ -412,8 +452,14 @@ const Product = () => {
                   return (
                     <div className="prod1" key={product.id}>
                       <img src={imageUrl} alt={product.productname} />
+                      
                       <div className="txt">
-                        <p style={{ color: statusColor }}>{product.state}</p>
+                        <div className="del">
+                          <p style={{ color: statusColor }}>{product.state}</p>
+                          <span onClick={() => handleDeleteProduct(product.id)} style={{ cursor: "pointer", color: "red" }}>
+                            Delete
+                          </span>
+                        </div>
                         <h4>{product.productname}  <p>₦{product.metadata?.price}</p></h4>                     
                         <h6 style={{ color: product.metadata.availability === "Out-of-stock" ? 'red' : 'green' }}>
                           {product.metadata.availability}

@@ -89,10 +89,10 @@ function App() {
         <Route path='/checkout' element={<CheckOut/>} />
         <Route path='/farmerSignup' element={<FarmerSignUp/>} />
         <Route path='/buyerSignup' element={<BuyerSignup/>} />
-        <Route path='/farmerlogin' element={<FarmerLogin/>} />
+        <Route path='/login' element={<FarmerLogin setJoin={setJoin} setLoggedIn={setLoggedIn} setUserDetails={setUserDetails} />} />
         {/* <Route path='/buyerlogin' element={<BuyerLogin/>} /> */}
-        <Route path='/dashboard' element={<Dashboard/>} />
-        <Route path='/product' element={<Product/>} />
+        {/* <Route path='/dashboard' element={<Dashboard/>} /> */}
+        <Route path='/dashboard' element={<Product/>} />
         <Route path='/transaction' element={<Transaction/>} />
         <Route path='/settings' element={<Settings/>} />
         <Route path='/help' element={<Help/>} />
@@ -100,9 +100,9 @@ function App() {
         <Route path='/farmerswithdrawalhistory' element={<FarmerWithdrawalHistory/>} />
 
 
-        <Route path='/admin' element={<AdminDashboard/>} />
+        {/* <Route path='/admin' element={<AdminDashboard/>} /> */}
         <Route path='/unapproved-product' element={<UnapproveProduct/>} />
-        <Route path='/adminproducts' element={<AdminProducts/>} />
+        <Route path='/admin' element={<AdminProducts/>} />
         <Route path='/unapprove' element={<UnapprovedFarmers/>} />
         <Route path='/farmers' element={<Farmers/>} />
         <Route path='/admin-transaction' element={<AdminTransaction/>} />
